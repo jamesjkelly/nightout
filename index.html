@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>NightOut</title>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+
+	<link rel="stylesheet" type="text/css" href="style.css">
+
+	<link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
+
+	<script
+	  src="https://code.jquery.com/jquery-3.2.1.min.js"
+	  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+	  crossorigin="anonymous"></script>
+
+</head>
+
+<body class="Site">
+
+<main class="Site-content">
+		<div class="sitehead">
+			<center><img src="assets/images/header.png" class="titleimg"></center>
+
+		<div class="navigation">
+				<nav>
+					<ul class="homenav">
+						<li><a href="#yelp-spacer">Find a Spot</a></li>
+						<li><a href="#map-spacer">Where You At?</a></li>
+						<li><a href="#lyft-spacer">Get A Ride</a></li>
+					</ul></nav>
+		</div></div>
+
+	
+	
+<!-- ELEMENT ONE: YELP -->
+
+<div id="yelp-spacer"></div>
+
+	<div class="container" id="yelp-container">
+
+		<div class="row">
+
+			<div class="col-md-4" id="home">
+				<h3>Find a Restaurant</h3>
+
+				<form>
+					  <div class="form-group" id="keyword-input">
+						    <label>Keywords</label>
+
+						    <small id="keywordHelp" class="form-text text-muted">Dinner, Bars, Biergarten, etc.</small>
+
+						    <input type="text" class="form-control">    
+					  </div>
+
+					  <div class="form-group">
+
+					    <label>Location</label>
+
+					    <input type="password" class="form-control" id="location-input">
+
+					  </div>
+
+					  <button type="submit" class="btn btn-primary">Submit</button>
+					  
+					</form>
+			</div>
+		
+
+			<div class="col-md-8">
+				<!-- YELP API RESULTS -->
+				<table class="table">
+				  <thead>
+				    <tr>
+				      <th>Restaurant Name</th>
+				      <th>Address</th>
+				      <th>Price Point</th>
+				      <th>Rating</th>
+				    </tr>
+				  </thead>
+
+				  <tbody>
+
+				  </tbody>
+
+				</table>
+			</div>
+		</div>
+	</div>
+	
+
+<!-- ELEMENT TWO: MAP/DIRECTION -->
+<div id="map-spacer"></div>
+
+	<div class="container" id="map-container">
+		<div class="row">
+		<div class="col-md-4">
+			
+		</div>
+
+		<div class="col-md-8">
+			<h3>Directions</h3>
+			Maecenas blandit odio ante, et porta nulla sagittis a. Fusce nec elit ullamcorper, euismod est ut, cursus nibh. Integer vehicula neque diam, et sodales turpis finibus vel. Integer in lacus placerat magna euismod luctus. Nulla feugiat dignissim commodo. Sed rhoncus sem ac lacus consequat, eget varius nibh consequat. Integer et iaculis eros. Phasellus lacus quam, auctor sed elementum at, aliquam et tortor. Sed a volutpat nisi, non tristique lorem. Aenean ornare augue sit amet libero efficitur finibus. Quisque iaculis, massa at ornare faucibus, velit massa imperdiet odio, ac vulputate felis mi eu massa. Aenean urna dui, porta eget semper id, auctor vitae risus. Aliquam pretium ultricies orci. Phasellus a venenatis nisl.
+			<!-- DIRECTIONS PRINT HERE -->
+		</div>
+		</div>
+	</div>
+
+
+<!-- ELEMENT THREE: LYFT BUTTON -->
+<div id="lyft-spacer"></div>
+
+	<div class="container" id="lyft-container">
+	<div id="lyft-web-button-parent" class=".lyft-web-button.hot-pink"></div>
+	<script src="lyft-test.js"></script>
+	</div>
+	</main>
+
+<footer>
+		<h6>Copyright 2017, That One Group</h6>
+</footer>
+
+
+<!-- JAVA LINKS -->
+<script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
+
+<script src="https://code.jquery.com/jquery.js"></script>
+
+<script src="nightout.js"></script>
+
+</body>
+</html>
