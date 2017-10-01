@@ -87,6 +87,10 @@ a {
 	width:100%;
 }
 
+#map {
+        height: 100%;
+      }
+
 .lyft-web-button.hot-pink {
   color: #FFFFFF; /* white */
   background-color: #FF00BF; /* pink */

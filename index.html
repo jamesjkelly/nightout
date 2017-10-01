@@ -5,14 +5,20 @@
 
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
 
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.40.1/mapbox-gl.css' rel='stylesheet'>
+
 	<link rel="stylesheet" type="text/css" href="style.css">
 
 	<link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
 
+	<!-- Jquery Minified -->
 	<script
-	  src="https://code.jquery.com/jquery-3.2.1.min.js"
-	  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-	  crossorigin="anonymous"></script>
+  	src="https://code.jquery.com/jquery-3.2.1.min.js"
+  	integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  	crossorigin="anonymous"></script> 
+
+  	<!-- MapQuest -->
+	<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.40.1/mapbox-gl.js'></script>
 
 </head>
 
@@ -46,22 +52,30 @@
 
 				<form>
 					  <div class="form-group" id="keyword-input">
-						    <label>Keywords</label>
+						<label>Keywords</label>
 
-						    <small id="keywordHelp" class="form-text text-muted">Dinner, Bars, Biergarten, etc.</small>
+						<small id="keywordHelp" class="form-text text-muted">Dinner, Bars, Biergarten, etc.</small>
 
-						    <input type="text" class="form-control">    
+						<input type="text" class="form-control">    
 					  </div>
 
 					  <div class="form-group">
 
 					    <label>Location</label>
 
-					    <input type="password" class="form-control" id="location-input">
+					    <input type="text" class="form-control" id="location-input">
 
 					  </div>
 
-					  <button type="submit" class="btn btn-primary">Submit</button>
+					  <div class="form-group">
+
+					    <label>Destination</label>
+
+					    <input type="text" class="form-control" id="destination-input">
+
+					  </div>
+
+					  <button class="btn btn-primary" id="search-button">Search</button>
 					  
 					</form>
 			</div>
@@ -95,12 +109,37 @@
 	<div class="container" id="map-container">
 		<div class="row">
 		<div class="col-md-4">
-			
+			<div id="map"></div>
+			<br>
+
+			<div class="form-check">
+			  <label class="form-check-label">
+			    <input class="form-check-input" type="checkbox" id="driving">
+			    Driving
+			  </label>
+			</div>
+
+			<div class="form-check">
+			  <label class="form-check-label">
+			    <input class="form-check-input" type="checkbox" id="walking">
+			    Walking
+			  </label>
+			</div>
+
+			<div class="form-check">
+			  <label class="form-check-label">
+			    <input class="form-check-input" type="checkbox" id="cycling">
+			    Cycling
+			  </label>
+			</div>
+
+
+
 		</div>
 
 		<div class="col-md-8">
 			<h3>Directions</h3>
-			Maecenas blandit odio ante, et porta nulla sagittis a. Fusce nec elit ullamcorper, euismod est ut, cursus nibh. Integer vehicula neque diam, et sodales turpis finibus vel. Integer in lacus placerat magna euismod luctus. Nulla feugiat dignissim commodo. Sed rhoncus sem ac lacus consequat, eget varius nibh consequat. Integer et iaculis eros. Phasellus lacus quam, auctor sed elementum at, aliquam et tortor. Sed a volutpat nisi, non tristique lorem. Aenean ornare augue sit amet libero efficitur finibus. Quisque iaculis, massa at ornare faucibus, velit massa imperdiet odio, ac vulputate felis mi eu massa. Aenean urna dui, porta eget semper id, auctor vitae risus. Aliquam pretium ultricies orci. Phasellus a venenatis nisl.
+			<span id="directions-container"></span>
 			<!-- DIRECTIONS PRINT HERE -->
 		</div>
 		</div>
@@ -111,22 +150,18 @@
 <div id="lyft-spacer"></div>
 
 	<div class="container" id="lyft-container">
-	<div id="lyft-web-button-parent" class=".lyft-web-button.hot-pink"></div>
-	<script src="lyft-test.js"></script>
+		<div id="lyft-web-button-parent" class=".lyft-web-button.hot-pink"></div>
 	</div>
-	</main>
+
+</main>
 
 <footer>
-		<h6>Copyright 2017, That One Group</h6>
+	<h6>Copyright 2017, That One Group</h6>
 </footer>
 
 
-<!-- JAVA LINKS -->
-<script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
-
-<script src="https://code.jquery.com/jquery.js"></script>
-
-<script src="nightout.js"></script>
+<!-- External JavaScript -->
+	<script src="lyft-test.js"></script>
 
 </body>
 </html>

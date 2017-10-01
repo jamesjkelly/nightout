@@ -1,4 +1,43 @@
- var OPTIONS = {
+//
+
+
+
+var destination = $("#destination-input").val();
+var origin = $("#location-input").val();
+
+
+$("#search-button").on("click", function(event){
+  console.log("Working");
+  event.preventDefault();
+
+// YELP API
+  var yelpKey = "";
+  var keyword = $("#keyword-input").val();
+  var yelpQuery = "https://api.yelp.com/v3/businesses/search&term= " + keyword + " &location= "+ origin +"";
+  $.ajax({
+    url: yelpQuery,
+    method: 'GET'
+  }).done(function(response){
+    console.log(response);
+    var results = response.data;
+    
+  });
+});
+
+// MAPQUEST DIRECTIONS
+  var mapKey = "gpFOjCK1DZeRpMnJG6W0DDiGPu8cj25X";
+  var mapQuery = "http://www.mapquestapi.com/directions/v2/route?key="+ mapKey +"&from="+ origin +"&to="+ destination +"";
+  $.ajax({
+    url: mapQuery,
+    method: 'GET'
+  }).done(function(response){
+    console.log(response);
+    var directions = response.data;
+    $("#directions-container").html(response.data);
+  });
+
+  // LYFT BUTTON
+   var OPTIONS = {
     scriptSrc: 'lyftWebButton.min.js',
     namespace: 'NightOut',
     clientId: 'SdaJLP8lKGiU',
