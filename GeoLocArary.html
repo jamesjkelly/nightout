@@ -1,12 +1,51 @@
+
 <!DOCTYPE html>
-<html>
-<body>
+<html lang="en">
+
+<head>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="./assets/style/style.css">
+   
+<script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyCSelOYkNwAw038Q-EJ96b9IRkNPKZ6sXQ",
+    authDomain: "nightout-2fb43.firebaseapp.com",
+    databaseURL: "https://nightout-2fb43.firebaseio.com",
+    projectId: "nightout-2fb43",
+    storageBucket: "nightout-2fb43.appspot.com",
+    messagingSenderId: "951832856822"
+  };
+  firebase.initializeApp(config);
+</script>
+
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.js"></script>
+    <title>GET LOCATION</title>
+</head>
+
+<body style="font-family: Roboto,sans-serif">
+    <div class="jumbotron">
+        <h1 class="text-center">Train Scheduler</h1>
+    </div>
+    <div class="container">
+        <div class="row" style='border:1px solid black;border-radius: 13px;'>
+            <div class="col-sm-12" >
+          
+
 <p>Click the button to get your coordinates.</p>
-<button onclick="getLocation()">Try It</button>
+<button onclick="getLocation()"  class="btn btn-secondary">Try It</button>
 <p id="demo"></p>
+<table>
+<tr><td> Location Array </td></tr></table>
 <script>
 var loc = [];
+var table = jQuery('table');
 var x = document.getElementById("demo");
+var database = firebase.database();
 
 function getLocation() {
     if (navigator.geolocation) {
@@ -21,8 +60,29 @@ function showPosition(position) {
     var lat = position.coords.latitude;
      var lon = position.coords.longitude;           
      loc.push(lat, lon); 
+       database.ref().push({
+      loc: loc,
+    })
+  
 }
+
+
+
+  
+
+database.ref().on("child_added", function(snapshot) {
+    var current = snapshot.val();
+    var now = moment();
+    console.log(snapshot.val());
+
+ 
+ table.append('<tr><td> ' + current.loc + '</td></tr>');
+  });  
 </script>
 
-</body>
+
+            </div></div>
+           
+        </div> 
+    </body>
 </html>
