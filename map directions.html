@@ -30,7 +30,7 @@
 
     <div>
 
-    <input id="submit" type="submit" />
+    <input id="submit" type="submit"/>
 </div>
 
 <br>
@@ -79,8 +79,8 @@ var map = new google.maps.Map(document.getElementById('map'), {
   mapTypeId: google.maps.MapTypeId.ROADMAP
 });
 
-directionsDisplay.setMap(map);
-directionsDisplay.setPanel(document.getElementById('panel'));
+directionsDisplay.setMap($("#map"));
+directionsDisplay.setPanel(document.getElementById($("#panel"));
 
 $('#submit').click(function() {
     var address = $('#address').val(); 
