@@ -11,6 +11,7 @@ $("#search-button").on("click", function(event){
   event.preventDefault();
 
 
+
 // MAPQUEST DIRECTIONS
   // var mapKey = "gpFOjCK1DZeRpMnJG6W0DDiGPu8cj25X";
   // var mapQuery = "http://www.mapquestapi.com/directions/v2/route?key="+ mapKey +"&from="+ origin +"&to="+ destination +"";
@@ -24,51 +25,52 @@ $("#search-button").on("click", function(event){
   // });
 
   // GOOGLE MAPS DIRECTION
-  // var placesKey = "AIzaSyBEozSg5YXg1aZy_bRN1jzb_KnugOMdGMQ";
-  // var placesQuery = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670,151.1957&radius=500&types=food&name=cruise&key="+ placesKey +"";
-  //   $.ajax({
-  //   url: placesQuery,
-  //   dataType: 'jsonp',    
-  //   jsonp: 'callback',
-  //   crossDomain: true, 
-  //   jsonp:false,
-  //   jsonpCallback: "json_callback",
-  //   method: 'GET',
-  //   success: function() { console.log('Success!'); },                                                                                                                                                                                       
-  //   error: function() { console.log('Uh Oh!'); },
+  var placesKey = "AIzaSyBEozSg5YXg1aZy_bRN1jzb_KnugOMdGMQ";
+  var placesQuery = "https://maps.googleapis.com/maps/api/place/textsearch/output?parameters";
+    $.ajax({
+    url: placesQuery,
+    dataType: 'jsonp',    
+    jsonp: 'callback',
+    crossDomain: true, 
+    jsonp:false,
+    jsonpCallback: "json_callback",
+    method: 'GET',
+    success: function() { console.log('Success!'); },                                                                                                                                                                                       
+    error: function() { console.log('Uh Oh!'); },
+  });
 
 //Google Places API
 
-var map;
-var service;
-var infowindow;
+// var map;
+// var service;
+// var infowindow;
 
-function initialize() {
-  var pyrmont = new google.maps.LatLng(-33.8665433,151.1956316);
+// function initialize() {
+//   var pyrmont = new google.maps.LatLng(-33.8665433,151.1956316);
 
-  map = new google.maps.Map(document.getElementById('map'), {
-      center: pyrmont,
-      zoom: 15
-    });
+//   map = new google.maps.Map(document.getElementById('map'), {
+//       center: pyrmont,
+//       zoom: 15
+//     });
 
-  var request = {
-    location: pyrmont,
-    radius: '500',
-    query: 'restaurant'
-  };
+//   var request = {
+//     location: pyrmont,
+//     radius: '500',
+//     query: 'restaurant'
+//   };
 
-  service = new google.maps.places.PlacesService(map);
-  service.textSearch(request, callback);
-}
+//   service = new google.maps.places.PlacesService(map);
+//   service.textSearch(request, callback);
+// }
 
-function callback(results, status) {
-  if (status == google.maps.places.PlacesServiceStatus.OK) {
-    for (var i = 0; i < results.length; i++) {
-      var place = results[i];
-      createMarker(results[i]);
-    }
-  }
-};
+// function callback(results, status) {
+//   if (status == google.maps.places.PlacesServiceStatus.OK) {
+//     for (var i = 0; i < results.length; i++) {
+//       var place = results[i];
+//       createMarker(results[i]);
+//     }
+//   }
+// };
 
   // })
     // .done(function(response){
