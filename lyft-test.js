@@ -2,35 +2,64 @@
 //   console.log("Working");
 //   event.preventDefault();
 
-  // GOOGLE MAPS DIRECTION
+// GEOLOCATION
+var geoOptions = {
+  enableHighAccuracy: true,
+  timeout: 5000,
+  maximumAge: 0
+};
+
+function success(pos) {
+  var crd = pos.coords;
+
+  console.log('Your current position is:');
+  console.log(`Latitude : ${crd.latitude}`);
+  console.log(`Longitude: ${crd.longitude}`);
+  console.log(`More or less ${crd.accuracy} meters.`);
+};
+
+function error(err) {
+  console.warn(`ERROR(${err.code}): ${err.message}`);
+};
+
+function willisAwesome() {
+
+navigator.geolocation.getCurrentPosition(success, error, geoOptions);
+otherGoogleFunction(crd);
+
+}
+
+// GOOGLE MAPS DIRECTIONS
 var directionsService = new google.maps.DirectionsService();
 var directionsDisplay = new google.maps.DirectionsRenderer();
 var service;
-var currentLat;
-var currentLong;
+var currentLat = crd.latitude;
+var currentLong = crd.longitude;
 var destLat;
 var destLong;
 
+function otherGoogleFunction() {
+  google.maps.event.addDomListener(window, 'load', function () {
+  var places = new google.maps.places.Autocomplete(document.getElementById('address'));
+  google.maps.event.addListener(places, 'place_changed', function () {
+    var place = places.getPlace();
+    var address = place.formatted_address;
+    currentLat = place.geometry.location.A;
+    currentLong = place.geometry.location.F;
+               
+    });
+  });
+
 google.maps.event.addDomListener(window, 'load', function () {
-            var places = new google.maps.places.Autocomplete(document.getElementById('address'));
-            google.maps.event.addListener(places, 'place_changed', function () {
-                var place = places.getPlace();
-                var address = place.formatted_address;
-                currentLat = place.geometry.location.A;
-                currentLong = place.geometry.location.F;
+  var places = new google.maps.places.Autocomplete(document.getElementById('destination'));
+  google.maps.event.addListener(places, 'place_changed', function () {
+    var place = places.getPlace();
+    var address = place.formatted_address;
+    estLat = place.geometry.location.A;
+    destLong = place.geometry.location.F;
                
-            });
-        });
-         google.maps.event.addDomListener(window, 'load', function () {
-            var places = new google.maps.places.Autocomplete(document.getElementById('destination'));
-            google.maps.event.addListener(places, 'place_changed', function () {
-                var place = places.getPlace();
-                var address = place.formatted_address;
-                destLat = place.geometry.location.A;
-                destLong = place.geometry.location.F;
-               
-            });
-        });
+    });
+  });
 
 var map = new google.maps.Map(document.getElementById('map'), {
   zoom:7,
@@ -46,7 +75,7 @@ $('#submit').click(function() {
     var request = {
         origin: address,
         destination: destination,
-        travelMode: google.maps.DirectionsTravelMode.DRIVING
+        travelMode: google.maps.DirectionsTravelMode.DRIVING,
     };
 
     directionsService.route(request, function(response, status) {
@@ -54,12 +83,13 @@ $('#submit').click(function() {
             directionsDisplay.setDirections(response);
         }
     });
-      function initialize() {
-  var details = new google.maps.LatLng(destLat,destLong);
+
+  function initialize() {
+    var details = new google.maps.LatLng(destLat,destLong);
 
     var placesRequest = {
-        location: details,
-        radius: '500',
+      location: details,
+      radius: '500',
       query: "restaurant"
   };
 
@@ -76,8 +106,9 @@ function callback(results, status) {
     }
   }
 }
-});
 
+});
+}
 
   // LYFT 
    var OPTIONS = {
@@ -112,3 +143,7 @@ function callback(results, status) {
   }).call(this, OPTIONS);
 
 // });
+
+
+
+willisAwesome();
