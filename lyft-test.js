@@ -1,17 +1,24 @@
-// $("#search-button").on("click", function(event){
-//   console.log("Working");
-//   event.preventDefault();
+
+
+var directionsService = new google.maps.DirectionsService();
+var directionsDisplay = new google.maps.DirectionsRenderer();
+var service;
+var currentLat;
+var currentLong;
+var destLat;
+var destLong;
 
 // GEOLOCATION
 var geoOptions = {
   enableHighAccuracy: true,
-  timeout: 5000,
+  // timeout: 2000,
   maximumAge: 0
 };
 
 function success(pos) {
   var crd = pos.coords;
-
+  currentLat = crd.latitude;
+  currentLong = crd.longitude;
   console.log('Your current position is:');
   console.log(`Latitude : ${crd.latitude}`);
   console.log(`Longitude: ${crd.longitude}`);
@@ -22,23 +29,12 @@ function error(err) {
   console.warn(`ERROR(${err.code}): ${err.message}`);
 };
 
-function willisAwesome() {
-
 navigator.geolocation.getCurrentPosition(success, error, geoOptions);
-otherGoogleFunction(crd);
 
-}
 
 // GOOGLE MAPS DIRECTIONS
-var directionsService = new google.maps.DirectionsService();
-var directionsDisplay = new google.maps.DirectionsRenderer();
-var service;
-var currentLat = crd.latitude;
-var currentLong = crd.longitude;
-var destLat;
-var destLong;
 
-function otherGoogleFunction() {
+
   google.maps.event.addDomListener(window, 'load', function () {
   var places = new google.maps.places.Autocomplete(document.getElementById('address'));
   google.maps.event.addListener(places, 'place_changed', function () {
@@ -108,7 +104,7 @@ function callback(results, status) {
 }
 
 });
-}
+
 
   // LYFT 
    var OPTIONS = {
@@ -145,5 +141,3 @@ function callback(results, status) {
 // });
 
 
-
-willisAwesome();
