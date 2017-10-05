@@ -57,8 +57,8 @@ google.maps.event.addDomListener(window, 'load', function () {
             google.maps.event.addListener(places, 'place_changed', function () {
                 var place = places.getPlace();
                 var address = place.formatted_address;
-                currentLat = place.geometry.location.A;
-                currentLong = place.geometry.location.F;
+                var latitude = place.geometry.location.A;
+                var longitude = place.geometry.location.F;
                
             });
         });
@@ -67,8 +67,8 @@ google.maps.event.addDomListener(window, 'load', function () {
             google.maps.event.addListener(places, 'place_changed', function () {
                 var place = places.getPlace();
                 var address = place.formatted_address;
-                destLat = place.geometry.location.A;
-                destLong = place.geometry.location.F;
+                var latitude = place.geometry.location.A;
+                var longitude = place.geometry.location.F;
                 destPlaceId = place.place_id
                 console.log(destPlaceId)
                 console.log(place)
@@ -108,11 +108,14 @@ service = new google.maps.places.PlacesService(map);
 service.getDetails(placeRequest, callback);
 
 function callback(place, status) {
-  console.log(status)
   console.log(place)
+  destLong = place.geometry.viewport.b.b
+  destLat = place.geometry.viewport.f.f
   if (status == google.maps.places.PlacesServiceStatus.OK) {
   }
 }
+console.log(destLong)
+  console.log(destLat)
 });
 
 </script>
