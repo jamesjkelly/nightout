@@ -7,6 +7,7 @@ var currentLat;
 var currentLong;
 var destLat;
 var destLong;
+var destPlaceId;
 
 // GEOLOCATION
 var geoOptions = {
@@ -23,6 +24,7 @@ function success(pos) {
   console.log(`Latitude : ${crd.latitude}`);
   console.log(`Longitude: ${crd.longitude}`);
   console.log(`More or less ${crd.accuracy} meters.`);
+  $("#address").append(crd).val().trim();
 };
 
 function error(err) {
@@ -33,27 +35,26 @@ navigator.geolocation.getCurrentPosition(success, error, geoOptions);
 
 
 // GOOGLE MAPS DIRECTIONS
-
-
-  google.maps.event.addDomListener(window, 'load', function () {
+google.maps.event.addDomListener(window, 'load', function () {
   var places = new google.maps.places.Autocomplete(document.getElementById('address'));
   google.maps.event.addListener(places, 'place_changed', function () {
     var place = places.getPlace();
     var address = place.formatted_address;
-    currentLat = place.geometry.location.A;
-    currentLong = place.geometry.location.F;
-               
+    var latitude = place.geometry.location.A;
+    var longitude = place.geometry.location.F;
     });
   });
 
 google.maps.event.addDomListener(window, 'load', function () {
   var places = new google.maps.places.Autocomplete(document.getElementById('destination'));
-  google.maps.event.addListener(places, 'place_changed', function () {
+  google.maps.event.addListener(places, 'place_changed', function() {
     var place = places.getPlace();
     var address = place.formatted_address;
-    estLat = place.geometry.location.A;
-    destLong = place.geometry.location.F;
-               
+    var latitude = place.geometry.location.A;
+    var longitude = place.geometry.location.F;
+    destPlaceId = place.place_id
+    console.log(destPlaceId)
+    console.log(place)
     });
   });
 
@@ -66,12 +67,12 @@ directionsDisplay.setMap(map);
 directionsDisplay.setPanel(document.getElementById('panel'));
 
 $('#submit').click(function() {
-    var address = $('#address').val(); 
+  var address = $('#address').val(); 
     var destination = $('#destination').val()
     var request = {
         origin: address,
         destination: destination,
-        travelMode: google.maps.DirectionsTravelMode.DRIVING,
+        travelMode: google.maps.DirectionsTravelMode.DRIVING
     };
 
     directionsService.route(request, function(response, status) {
@@ -80,31 +81,24 @@ $('#submit').click(function() {
         }
     });
 
-  function initialize() {
-    var details = new google.maps.LatLng(destLat,destLong);
+      var placeRequest = {
+  placeId: destPlaceId
+};
+console.log(placeRequest);
 
-    var placesRequest = {
-      location: details,
-      radius: '500',
-      query: "restaurant"
-  };
+service = new google.maps.places.PlacesService(map);
+service.getDetails(placeRequest, callback);
 
-  service = new google.maps.places.PlacesService(map);
-  service.textSearch(placesRequest, callback);
- }
-
-function callback(results, status) {
-  console.log(results)
+function callback(place, status) {
+  console.log(place)
+  destLong = place.geometry.viewport.b.b
+  destLat = place.geometry.viewport.f.f
   if (status == google.maps.places.PlacesServiceStatus.OK) {
-    for (var i = 0; i < results.length; i++) {
-      var place = results[i];
-      createMarker(results[i]);
-    }
   }
 }
-
+console.log(destLong);
+  console.log(destLat);
 });
-
 
   // LYFT 
    var OPTIONS = {
@@ -115,8 +109,8 @@ function callback(results, status) {
     location: {
       pickup: {}, 
       destination: {
-        latitude: '37.776503000',
-        longitude: '-122.392038500',
+        latitude: destLat,
+        longitude: destLong,
       },
     },
     parentElement: document.getElementById('lyft-web-button-parent'),
@@ -138,6 +132,6 @@ function callback(results, status) {
   }, c.src = t.scriptSrc, a.insertBefore(c, a.childNodes[0])
   }).call(this, OPTIONS);
 
-// });
+
 
 
