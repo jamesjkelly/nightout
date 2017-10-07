@@ -52,22 +52,6 @@
 				<h3>Find a Restaurant</h3>
 
 				<form>
-					  <div class="form-group" id="keyword-input">
-						<label>Keywords</label>
-
-						<small id="keywordHelp" class="form-text text-muted">Dinner, Bars, Biergarten, etc.</small>
-
-						<input type="text" class="form-control">    
-					  </div>
-
-					  <div class="form-group">
-
-					    <label>Location</label>
-
-					    <input type="text" class="form-control" id="location-input">
-
-					  </div>
-
 					  <div class="form-group">
 
 					    <label>Destination</label>
@@ -76,9 +60,22 @@
 
 					  </div>
 
+					<div class="form-radio">
+ 						<label class="form-radio-label">
+    					<input class="form-radio-input" name="type" type="radio" value="bar"> Bar</label>
+				
+ 						<label class="form-radio-label">
+    					<input class="form-radio-input" name="type" type="radio" value="restaurant"> Restaurant</label>
+	
+ 						<label class="form-radio-label">
+    					<input class="form-radio-input" name="type" type="radio" value="night_club"> Club</label>
+		
+ 						<label class="form-radio-label">
+    					<input class="form-radio-input" name="type" type="radio" value="cafe"> Cafe</label>
+					</div>
+
 					  <button class="btn btn-primary" id="search-button">Search</button>
-					  
-					</form>
+				</form>
 			</div>
 		
 
