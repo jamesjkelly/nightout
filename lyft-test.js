@@ -1,81 +1,118 @@
+$( document ).ready(function() {
 
-
-
-
-var destination = $("#destination-input").val();
-var origin = $("#location-input").val();
-
-
-$("#search-button").on("click", function(event){
-  console.log("Working");
-  event.preventDefault();
-
-
-// MAPQUEST DIRECTIONS
-  // var mapKey = "gpFOjCK1DZeRpMnJG6W0DDiGPu8cj25X";
-  // var mapQuery = "http://www.mapquestapi.com/directions/v2/route?key="+ mapKey +"&from="+ origin +"&to="+ destination +"";
-  // $.ajax({
-  //   url: mapQuery,
-  //   method: 'GET'
-  // }).done(function(response){
-  //   console.log(response);
-  //   var directions = response.data;
-  //   $("#directions-container").html(response.data);
-  // });
-
-  // GOOGLE MAPS DIRECTION
-  // var placesKey = "AIzaSyBEozSg5YXg1aZy_bRN1jzb_KnugOMdGMQ";
-  // var placesQuery = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670,151.1957&radius=500&types=food&name=cruise&key="+ placesKey +"";
-  //   $.ajax({
-  //   url: placesQuery,
-  //   dataType: 'jsonp',    
-  //   jsonp: 'callback',
-  //   crossDomain: true, 
-  //   jsonp:false,
-  //   jsonpCallback: "json_callback",
-  //   method: 'GET',
-  //   success: function() { console.log('Success!'); },                                                                                                                                                                                       
-  //   error: function() { console.log('Uh Oh!'); },
-
-//Google Places API
-
-var map;
+var directionsService = new google.maps.DirectionsService();
+var directionsDisplay = new google.maps.DirectionsRenderer();
 var service;
-var infowindow;
+var currentLat;
+var currentLong;
+var destLat;
+var destLong;
+var destPlaceId;
 
-function initialize() {
-  var pyrmont = new google.maps.LatLng(-33.8665433,151.1956316);
+// GEOLOCATION
+var geoOptions = {
+  enableHighAccuracy: true,
+  // timeout: 2000,
+  maximumAge: 0
+};
 
-  map = new google.maps.Map(document.getElementById('map'), {
-      center: pyrmont,
-      zoom: 15
+function success(pos) {
+  var crd = pos.coords;
+  currentLat = crd.latitude;
+  currentLong = crd.longitude;
+  console.log('Your current position is:');
+  console.log(`Latitude : ${crd.latitude}`);
+  console.log(`Longitude: ${crd.longitude}`);
+  console.log(`More or less ${crd.accuracy} meters.`);
+  // $("#location-input").append(crd).val().trim();
+};
+
+function error(err) {
+  console.warn(`ERROR(${err.code}): ${err.message}`);
+};
+
+navigator.geolocation.getCurrentPosition(success, error, geoOptions);
+
+// GOOGLE MAPS DIRECTIONS
+// google.maps.event.addDomListener(window, 'load', function () {
+//             var places = new google.maps.places.Autocomplete(document.getElementById('location-input'));
+//             google.maps.event.addListener(places, 'place_changed', function () {
+//                 var place = places.getPlace();
+//                 var address = place.formatted_address;
+//                 var latitude = place.geometry.location.A;
+//                 var longitude = place.geometry.location.F;
+               
+//             });
+//         });
+
+         google.maps.event.addDomListener(window, 'load', function () {
+            var places = new google.maps.places.Autocomplete(document.getElementById('destination-input'));
+            google.maps.event.addListener(places, 'place_changed', function () {
+                var place = places.getPlace();
+                var address = place.formatted_address;
+                var latitude = place.geometry.location.A;
+                var longitude = place.geometry.location.F;
+                destPlaceId = place.place_id
+                destLong = place.geometry.viewport.b.b
+                destLat = place.geometry.viewport.f.f
+               
+            });
+        });
+
+var map = new google.maps.Map(document.getElementById('map'), {
+  zoom:7,
+  mapTypeId: google.maps.MapTypeId.ROADMAP
+});
+
+directionsDisplay.setMap(map);
+directionsDisplay.setPanel(document.getElementById('panel'));
+
+$('#search-button').click(function() {
+    event.preventDefault();
+    var keyword = $('input[type]:checked').val();
+    console.log(keyword);
+    var address = $('#location-input').val(); 
+    var destination = $('#destination-input').val()
+    var request = {
+        origin: address,
+        destination: destination,
+        travelMode: google.maps.DirectionsTravelMode.DRIVING
+    };
+    console.log(currentLat + currentLong);
+    
+    directionsService.route(request, function(response, status) {
+        if (status == google.maps.DirectionsStatus.OK) {
+            directionsDisplay.setDirections(response);
+        }
     });
+     var nearbyDestlocation = new google.maps.LatLng(destLat,destLong);
 
-  var request = {
-    location: pyrmont,
+  var nearbyRequest = {
+    location: nearbyDestlocation,
     radius: '500',
-    query: 'restaurant'
+    keyword: [keyword]
   };
 
   service = new google.maps.places.PlacesService(map);
-  service.textSearch(request, callback);
-}
+  service.nearbySearch(nearbyRequest, callback);
+
 
 function callback(results, status) {
+  
+  
   if (status == google.maps.places.PlacesServiceStatus.OK) {
-    for (var i = 0; i < results.length; i++) {
-      var place = results[i];
-      createMarker(results[i]);
-    }
+    console.log(results[0])
+     console.log(results)
+     destPlace1 = results[0]
+     destPlace2 = results[1]
+     destPlace3 = results[2]
+     destplace4 = results[3]
+     destPlace5 = results[4]
   }
-};
+}
 
-  // })
-    // .done(function(response){
-    // console.log(response);
-    // // var directions = response.data;
-    // $("#directions-container").html(response.data);
-  // });
+});
+
 
   // LYFT 
   //  var OPTIONS = {
@@ -86,15 +123,15 @@ function callback(results, status) {
   //   location: {
   //     pickup: {}, 
   //     destination: {
-  //       latitude: '37.776503000',
-  //       longitude: '-122.392038500',
+  //       latitude: destLat,
+  //       longitude: destLong,
   //     },
   //   },
   //   parentElement: document.getElementById('lyft-web-button-parent'),
   //   queryParams: {
   //     credits: ''
   //   },
-  //   theme: 'multicolor large',
+  //   theme: 'launcher-medium',
   // };
   // (function(t) {
   //   var n = this.window,
@@ -109,4 +146,6 @@ function callback(results, status) {
   // }, c.src = t.scriptSrc, a.insertBefore(c, a.childNodes[0])
   // }).call(this, OPTIONS);
 
+
 });
+
