@@ -107,7 +107,7 @@ a {
 #map {
 	height: 300px;
 	position: fixed;
-	padding: 5px;
+	margin-top: 15px;
 }
  h3 {
  	margin-top: 10px;
@@ -116,7 +116,6 @@ a {
 #panel {
 	height: 375px;
 }
-
 
 
 #submit {

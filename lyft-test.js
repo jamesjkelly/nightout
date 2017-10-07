@@ -24,7 +24,7 @@ function success(pos) {
   console.log(`Latitude : ${crd.latitude}`);
   console.log(`Longitude: ${crd.longitude}`);
   console.log(`More or less ${crd.accuracy} meters.`);
-  $("#address").append(crd).val().trim();
+  $("#location-input").append(crd).val().trim();
 };
 
 function error(err) {
@@ -36,27 +36,28 @@ navigator.geolocation.getCurrentPosition(success, error, geoOptions);
 
 // GOOGLE MAPS DIRECTIONS
 google.maps.event.addDomListener(window, 'load', function () {
-  var places = new google.maps.places.Autocomplete(document.getElementById('address'));
-  google.maps.event.addListener(places, 'place_changed', function () {
-    var place = places.getPlace();
-    var address = place.formatted_address;
-    var latitude = place.geometry.location.A;
-    var longitude = place.geometry.location.F;
-    });
-  });
-
-google.maps.event.addDomListener(window, 'load', function () {
-  var places = new google.maps.places.Autocomplete(document.getElementById('destination'));
-  google.maps.event.addListener(places, 'place_changed', function() {
-    var place = places.getPlace();
-    var address = place.formatted_address;
-    var latitude = place.geometry.location.A;
-    var longitude = place.geometry.location.F;
-    destPlaceId = place.place_id
-    console.log(destPlaceId)
-    console.log(place)
-    });
-  });
+            var places = new google.maps.places.Autocomplete(document.getElementById('location-input'));
+            google.maps.event.addListener(places, 'place_changed', function () {
+                var place = places.getPlace();
+                var address = place.formatted_address;
+                var latitude = place.geometry.location.A;
+                var longitude = place.geometry.location.F;
+               
+            });
+        });
+         google.maps.event.addDomListener(window, 'load', function () {
+            var places = new google.maps.places.Autocomplete(document.getElementById('destination-input'));
+            google.maps.event.addListener(places, 'place_changed', function () {
+                var place = places.getPlace();
+                var address = place.formatted_address;
+                var latitude = place.geometry.location.A;
+                var longitude = place.geometry.location.F;
+                destPlaceId = place.place_id
+                destLong = place.geometry.viewport.b.b
+                destLat = place.geometry.viewport.f.f
+               
+            });
+        });
 
 var map = new google.maps.Map(document.getElementById('map'), {
   zoom:7,
@@ -66,9 +67,12 @@ var map = new google.maps.Map(document.getElementById('map'), {
 directionsDisplay.setMap(map);
 directionsDisplay.setPanel(document.getElementById('panel'));
 
-$('#submit').click(function() {
-  var address = $('#address').val(); 
-    var destination = $('#destination').val()
+$('#search-button').click(function() {
+    event.preventDefault();
+    var keyword = $("#keyword-input").val()
+    console.log(keyword)
+    var address = $('#location-input').val(); 
+    var destination = $('#destination-input').val()
     var request = {
         origin: address,
         destination: destination,
@@ -80,24 +84,33 @@ $('#submit').click(function() {
             directionsDisplay.setDirections(response);
         }
     });
+     var nearbyDestlocation = new google.maps.LatLng(destLat,destLong);
 
-      var placeRequest = {
-  placeId: destPlaceId
-};
-console.log(placeRequest);
+  var nearbyRequest = {
+    location: nearbyDestlocation,
+    radius: '500',
+    keyword: [keyword]
+  };
 
-service = new google.maps.places.PlacesService(map);
-service.getDetails(placeRequest);
+  service = new google.maps.places.PlacesService(map);
+  service.nearbySearch(nearbyRequest, callback);
 
-// function callback(place, status) {
-//   console.log(place)
-  destLong = place.geometry.viewport.b.b
-  destLat = place.geometry.viewport.f.f
+
+function callback(results, status) {
+  
+  
   if (status == google.maps.places.PlacesServiceStatus.OK) {
+    console.log(results[0])
+     console.log(results)
+     destPlace1 = results[0]
+     destPlace2 = results[1]
+     destPlace3 = results[2]
+     destplace4 = results[3]
+     destPlace5 = results[4]
   }
+}
 
-console.log(destLong);
-  console.log(destLat);
+});
 
 
   // LYFT 
@@ -132,6 +145,6 @@ console.log(destLong);
   }, c.src = t.scriptSrc, a.insertBefore(c, a.childNodes[0])
   }).call(this, OPTIONS);
 
-});
+
 
 
