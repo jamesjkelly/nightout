@@ -149,20 +149,29 @@ function callback(results, status) {
      for (i = 0; i < results.length; i ++){
       var item = results[i];
       console.log(item);
+      var hours = "not available"
+      if(item.opening_hours && item.opening_hours.open_now){
+        hours = item.opening_hours.open_now
+      }
+      var rating = "not available"
+      if(item.rating){
+        rating = item.rating
+      }
+      
       res.push({
         name: item.name,
         vicinity: item.vicinity,
         longtitude: item.geometry.viewport.b.b,
         latitude: item.geometry.viewport.f.f,
-        rating:item.rating,
-        open: item.opening_hours.open_now,
+        rating: rating,
+        open: hours,
       });
       console.log(item.rating)
-      console.log(item.opening_hours.open_now)
+      console.log(hours)
       console.log(item.vicinity)
       console.log(item.name)
    }
-   database.ref().push(res);
+   database.ref().push(res[0]);
    }
    }
 
