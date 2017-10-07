@@ -10,40 +10,40 @@ var destLong;
 var destPlaceId;
 
 // GEOLOCATION
-var geoOptions = {
-  enableHighAccuracy: true,
-  // timeout: 2000,
-  maximumAge: 0
-};
+// var geoOptions = {
+//   enableHighAccuracy: true,
+//   // timeout: 2000,
+//   maximumAge: 0
+// };
 
-function success(pos) {
-  var crd = pos.coords;
-  currentLat = crd.latitude;
-  currentLong = crd.longitude;
-  console.log('Your current position is:');
-  console.log(`Latitude : ${crd.latitude}`);
-  console.log(`Longitude: ${crd.longitude}`);
-  console.log(`More or less ${crd.accuracy} meters.`);
-  // $("#location-input").append(crd).val().trim();
-};
+// function success(pos) {
+//   var crd = pos.coords;
+//   currentLat = crd.latitude;
+//   currentLong = crd.longitude;
+//   console.log('Your current position is:');
+//   console.log(`Latitude : ${crd.latitude}`);
+//   console.log(`Longitude: ${crd.longitude}`);
+//   console.log(`More or less ${crd.accuracy} meters.`);
+//   // $("#location-input").append(crd).val().trim();
+// };
 
-function error(err) {
-  console.warn(`ERROR(${err.code}): ${err.message}`);
-};
+// function error(err) {
+//   console.warn(`ERROR(${err.code}): ${err.message}`);
+// };
 
-navigator.geolocation.getCurrentPosition(success, error, geoOptions);
+// navigator.geolocation.getCurrentPosition(success, error, geoOptions);
 
 // GOOGLE MAPS DIRECTIONS
-// google.maps.event.addDomListener(window, 'load', function () {
-//             var places = new google.maps.places.Autocomplete(document.getElementById('location-input'));
-//             google.maps.event.addListener(places, 'place_changed', function () {
-//                 var place = places.getPlace();
-//                 var address = place.formatted_address;
-//                 var latitude = place.geometry.location.A;
-//                 var longitude = place.geometry.location.F;
+google.maps.event.addDomListener(window, 'load', function () {
+            var places = new google.maps.places.Autocomplete(document.getElementById('location-input'));
+            google.maps.event.addListener(places, 'place_changed', function () {
+                var place = places.getPlace();
+                var address = place.formatted_address;
+                var latitude = place.geometry.location.A;
+                var longitude = place.geometry.location.F;
                
-//             });
-//         });
+            });
+        });
 
          google.maps.event.addDomListener(window, 'load', function () {
             var places = new google.maps.places.Autocomplete(document.getElementById('destination-input'));
@@ -67,6 +67,8 @@ var map = new google.maps.Map(document.getElementById('map'), {
 directionsDisplay.setMap(map);
 directionsDisplay.setPanel(document.getElementById('panel'));
 
+
+// GOOGLE PLACES
 $('#search-button').click(function() {
     event.preventDefault();
     var keyword = $('input[type]:checked').val();
@@ -78,7 +80,6 @@ $('#search-button').click(function() {
         destination: destination,
         travelMode: google.maps.DirectionsTravelMode.DRIVING
     };
-    console.log(currentLat + currentLong);
     
     directionsService.route(request, function(response, status) {
         if (status == google.maps.DirectionsStatus.OK) {

@@ -1,0 +1,7 @@
+1. On load, user current location detected
+2. Current location populates in to Google Maps and Lyft
+3. User inputs desired desination area/landmark
+4. Establishment results load in to table
+5. User selects desired establishment
+6. Establishment lat/long loads in to Google Maps API
+7. Directions from current location to destination populates in to directions
