@@ -1,4 +1,4 @@
- <html>
+<html>
 <head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
 <title>Directions Example</title>
@@ -114,7 +114,6 @@ directionsDisplay.setPanel(document.getElementById('panel'));
 
 $('#submit').click(function() {
     var keyword = $("#keyword").val()
-    console.log(keyword)
     var address = $('#address').val(); 
     var destination = $('#destination').val()
     var request = {
@@ -130,11 +129,15 @@ $('#submit').click(function() {
         }
     });
      var nearbyDestlocation = new google.maps.LatLng(destLat,destLong);
-
+var bar;
   var nearbyRequest = {
     location: nearbyDestlocation,
     radius: '500',
+<<<<<<< HEAD
     keyword: [keyword]
+=======
+    type: [keyword],
+>>>>>>> 6389cb958e98c4473149d53b26a24e94909e7879
   };
 
   service = new google.maps.places.PlacesService(map);
@@ -145,49 +148,42 @@ function callback(results, status) {
   
   
   if (status == google.maps.places.PlacesServiceStatus.OK) {
-    console.log(results[0])
-     console.log(results)
-     destPlace1 = results[0]
-     destPlace2 = results[1]
-     destPlace3 = results[2]
-     destplace4 = results[3]
-     destPlace5 = results[4]
-  }
-database.ref().push({
-      name: destPlace1.name,
-      vicinity: destPlace1.vicinity,
-      longtitude: destPlace1.geometry.viewport.b.b,
-      latitude: destPlace1.geometry.viewport.f.f,
+     var i = 0
+     var res = [];
+     for (i = 0; i < results.length; i ++){
+      var item = results[i];
+      console.log(item);
+      res.push({
+        name: item.name,
+        vicinity: item.vicinity,
+        longtitude: item.geometry.viewport.b.b,
+        latitude: item.geometry.viewport.f.f,
+        rating:item.rating,
+        open: item.opening_hours.open_now,
+      });
+      console.log(item.rating)
+      console.log(item.opening_hours.open_now)
+      console.log(item.vicinity)
+      console.log(item.name)
+   }
+   database.ref().push(res);
+   }
+   }
 
-
-    })
-     console.log(destPlace1.name + " " + destPlace1.vicinity + " " + destPlace1.geometry.viewport.b.b, + " " +destPlace1.geometry.viewport.f.f);
-
-}
-
-<<<<<<< HEAD
-=======
-
->>>>>>> 52abf827885bbd2a024ca99d99c5dd3fdd396b45
-//       var placeRequest = {
-//   placeId: destPlaceId
-// };
-// console.log(destPlaceId)
-
-// service = new google.maps.places.PlacesService(map);
-// service.getDetails(placeRequest, callback);
-
-// function callback(place, status) {
-//   console.log(place)
-//   destLong = place.geometry.viewport.b.b
-//   destLat = place.geometry.viewport.f.f
-//   if (status == google.maps.places.PlacesServiceStatus.OK) {
-//   }
-// }
-// console.log(destLong)
-//   console.log(destLat)
-});//end of submit
-
+   database.ref().on('child_added', function(childSnapshot) {
+  $('.table').append(
+    '<tr><td>' +
+      childSnapshot.val().name +
+      '</td><td>' +
+      childSnapshot.val().vicinity +
+      '</td><td>' +
+      childSnapshot.val().rating +
+      '</td><td>' +
+      childSnapshot.val().open +
+      '</td></tr>'
+  );
+});
+ });
 </script>
 
 </body>
