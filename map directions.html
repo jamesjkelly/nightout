@@ -114,7 +114,6 @@ directionsDisplay.setPanel(document.getElementById('panel'));
 
 $('#submit').click(function() {
     var keyword = $("#keyword").val()
-    console.log(keyword)
     var address = $('#address').val(); 
     var destination = $('#destination').val()
     var request = {
@@ -145,8 +144,6 @@ function callback(results, status) {
   
   
   if (status == google.maps.places.PlacesServiceStatus.OK) {
-    console.log(results[0])
-     console.log(results)
      var i = 0
      var res = [];
      for (i = 0; i < results.length; i ++){
@@ -157,11 +154,31 @@ function callback(results, status) {
         vicinity: item.vicinity,
         longtitude: item.geometry.viewport.b.b,
         latitude: item.geometry.viewport.f.f,
+        rating:item.rating,
+        open: item.opening_hours.open_now,
       });
+      console.log(item.rating)
+      console.log(item.opening_hours.open_now)
+      console.log(item.vicinity)
+      console.log(item.name)
    }
    database.ref().push(res);
    }
    }
+
+   database.ref().on('child_added', function(childSnapshot) {
+  $('.table').append(
+    '<tr><td>' +
+      childSnapshot.val().name +
+      '</td><td>' +
+      childSnapshot.val().vicinity +
+      '</td><td>' +
+      childSnapshot.val().rating +
+      '</td><td>' +
+      childSnapshot.val().open +
+      '</td></tr>'
+  );
+});
  });
 </script>
 
