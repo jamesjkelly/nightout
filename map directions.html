@@ -134,7 +134,7 @@ $('#submit').click(function() {
   var nearbyRequest = {
     location: nearbyDestlocation,
     radius: '500',
-    type: [keyword]
+    keyword: [keyword]
   };
 
   service = new google.maps.places.PlacesService(map);
