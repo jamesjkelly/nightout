@@ -85,7 +85,12 @@ a {
 
 #lyft-container {
 	width: 100%;
-	height: 100px;
+	height: 80px;
+}
+
+.container {
+	border-radius: 5px;
+	clear:both;
 }
 
 #yelp-spacer, #map-spacer, #lyft-spacer {
@@ -95,33 +100,32 @@ a {
 
 #directions-div {
 	margin-top: 10px;
+	height: auto;
+	overflow-y: scroll;
 }
 
 #map {
 	height: 300px;
+	position: fixed;
+	padding: 5px;
 }
+ h3 {
+ 	margin-top: 10px;
+ }
 
 #panel {
-	height: 300px;
+	height: 375px;
 }
+
+
 
 #submit {
 	margin-top: 5px;
 	margin-bottom: 5px;
 }
 
-.lyft-web-button.hot-pink {
-  color: #FFFFFF; /* white */
-  background-color: #FF00BF; /* pink */
-}
-.lyft-web-button.hot-pink:hover {
-  background-color: #E600AC; /* reduce brightness by 10% */
-}
-.lyft-web-button.hot-pink > .lyft-logo > svg > path {
-  fill: #FFFFFF; /* white */
-}
-.lyft-web-button.hot-pink > .arrow-icon > svg > path {
-  fill: #FFFFFF; /* white */
+#lyft-web-button-parent {
+	padding-top: 5px;
 }
 
 

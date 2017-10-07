@@ -87,18 +87,18 @@ $('#submit').click(function() {
 console.log(placeRequest);
 
 service = new google.maps.places.PlacesService(map);
-service.getDetails(placeRequest, callback);
+service.getDetails(placeRequest);
 
-function callback(place, status) {
-  console.log(place)
+// function callback(place, status) {
+//   console.log(place)
   destLong = place.geometry.viewport.b.b
   destLat = place.geometry.viewport.f.f
   if (status == google.maps.places.PlacesServiceStatus.OK) {
   }
-}
+
 console.log(destLong);
   console.log(destLat);
-});
+
 
   // LYFT 
    var OPTIONS = {
@@ -117,7 +117,7 @@ console.log(destLong);
     queryParams: {
       credits: ''
     },
-    theme: 'multicolor large',
+    theme: 'launcher-medium',
   };
   (function(t) {
     var n = this.window,
@@ -132,6 +132,6 @@ console.log(destLong);
   }, c.src = t.scriptSrc, a.insertBefore(c, a.childNodes[0])
   }).call(this, OPTIONS);
 
-
+});
 
 
