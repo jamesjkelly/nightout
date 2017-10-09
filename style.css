@@ -104,6 +104,10 @@ a {
 	overflow-y: scroll;
 }
 
+.results-table {
+	overflow-y: scroll;
+}
+
 #map {
 	height: 300px;
 	position: fixed;
@@ -115,6 +119,7 @@ a {
 
 #panel {
 	height: 375px;
+	overflow-y: scroll;
 }
 
 

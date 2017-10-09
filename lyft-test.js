@@ -9,6 +9,17 @@ var destLat;
 var destLong;
 var destPlaceId;
 
+var config = {
+    apiKey: "AIzaSyCSelOYkNwAw038Q-EJ96b9IRkNPKZ6sXQ",
+    authDomain: "nightout-2fb43.firebaseapp.com",
+    databaseURL: "https://nightout-2fb43.firebaseio.com",
+    projectId: "nightout-2fb43",
+    storageBucket: "nightout-2fb43.appspot.com",
+    messagingSenderId: "951832856822"
+  };
+  firebase.initializeApp(config);
+var database = firebase.database();
+
 // GEOLOCATION
 // var geoOptions = {
 //   enableHighAccuracy: true,
@@ -59,7 +70,8 @@ google.maps.event.addDomListener(window, 'load', function () {
             });
         });
 
-var map = new google.maps.Map(document.getElementById('map'), {
+var map = new google.maps.Map(document.getElementById('map'), 
+  {
   zoom:7,
   mapTypeId: google.maps.MapTypeId.ROADMAP
 });
@@ -99,21 +111,53 @@ $('#search-button').click(function() {
 
 
 function callback(results, status) {
-  
-  
   if (status == google.maps.places.PlacesServiceStatus.OK) {
-    console.log(results[0])
-     console.log(results)
-     destPlace1 = results[0]
-     destPlace2 = results[1]
-     destPlace3 = results[2]
-     destplace4 = results[3]
-     destPlace5 = results[4]
-  }
-}
+     var i = 0
+     var res = [];
+     for (i = 0; i < results.length; i++){
+      var item = results[i];
 
+      var hours = "not available"
+      if(item.opening_hours){
+        hours = item.opening_hours.open_now
+      }
+      var rating = "not available"
+      if(item.rating){
+        rating = item.rating
+      }
+      
+      res.push({
+        name: item.name,
+        vicinity: item.vicinity,
+        longtitude: item.geometry.viewport.b.b,
+        latitude: item.geometry.viewport.f.f,
+        rating: rating,
+        open: hours,
+      });
+      console.log(item)
+      console.log(item.rating)
+      console.log(hours)
+      console.log(item.vicinity)
+      console.log(item.name)
+   }
+   database.ref().push(res);
+   }
+   }
+
+   database.ref().on('child_added', function(childSnapshot) {
+  $('.table').prepend(
+    '<tr><td>' +
+      childSnapshot.val().name +
+      '</td><td>' +
+      childSnapshot.val().vicinity +
+      '</td><td>' +
+      childSnapshot.val().rating +
+      '</td><td>' +
+      childSnapshot.val().open +
+      '</td></tr>'
+  );
 });
-
+ });
 
   // LYFT 
   //  var OPTIONS = {
