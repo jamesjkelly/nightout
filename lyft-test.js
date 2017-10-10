@@ -73,11 +73,10 @@ function callback(results, status) {
     console.log(results[0])
      console.log(results)
      var i = 0
-     var res = [];
      for (i = 0; i < 5; i ++){
       var item = results[i];
-      
       var rating = "Not Available";
+      
       if (item.rating) {
         rating = item.rating
       }
@@ -98,9 +97,19 @@ function callback(results, status) {
       var addresses = [item.vicinity];
       console.log(item);
       console.log(item.vicinity);
-      $('.table').prepend('<tr class = "empty"><td>' + item.name + '</td><td>' + item.vicinity + '</td><td>' + rating +'</td><td>' + hours +'</td><td>' + "<button >" + '</tr>'
+      $('.table').prepend('<tr class = "empty"><td>' + item.name + '</td><td>' + item.vicinity + '</td><td>' + rating +'</td><td>' + hours +'</td><td>' + "<button class='directionsbutton' data-directions=' "+ item.vicinity +"'>get directions</button>" + '</tr>'
+  
   );
-    };};};
+    };
+$(".directionsbutton").on("click",function(){
+      console.log($(this).attr("data-directions"))
+      $("#establishment-input").val($(this).attr("data-directions"))
+    })
+
+  };};
+
+   
+  
 
 });
 
