@@ -68,6 +68,7 @@ $('#search-button').click(function() {
 });
 
 function callback(results, status) {
+  $('.empty').empty();
   if (status == google.maps.places.PlacesServiceStatus.OK)  if (status == google.maps.places.PlacesServiceStatus.OK) {
     console.log(results[0])
      console.log(results)
@@ -75,6 +76,11 @@ function callback(results, status) {
      var res = [];
      for (i = 0; i < 5; i ++){
       var item = results[i];
+      
+      var rating = "Not Available";
+      if (item.rating) {
+        rating = item.rating
+      }
 
       var hours = "not available";
       if (item.opening_hours) {
@@ -88,8 +94,11 @@ function callback(results, status) {
         }
       }
       
+
+      var addresses = [item.vicinity];
       console.log(item);
-      $('.table').prepend('<tr><td>' + item.name + '</td><td>' + item.vicinity + '</td><td>' + item.rating +'</td><td>' + hours +'</td></tr>'
+      console.log(item.vicinity);
+      $('.table').prepend('<tr class = "empty"><td>' + item.name + '</td><td>' + item.vicinity + '</td><td>' + rating +'</td><td>' + hours +'</td><td>' + "<button >" + '</tr>'
   );
     };};};
 
