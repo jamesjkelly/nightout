@@ -8,41 +8,8 @@ var currentLong;
 var destLat;
 var destLong;
 var destPlaceId;
+var res = [];
 
-var config = {
-    apiKey: "AIzaSyCSelOYkNwAw038Q-EJ96b9IRkNPKZ6sXQ",
-    authDomain: "nightout-2fb43.firebaseapp.com",
-    databaseURL: "https://nightout-2fb43.firebaseio.com",
-    projectId: "nightout-2fb43",
-    storageBucket: "nightout-2fb43.appspot.com",
-    messagingSenderId: "951832856822"
-  };
-  firebase.initializeApp(config);
-var database = firebase.database();
-
-// GEOLOCATION
-// var geoOptions = {
-//   enableHighAccuracy: true,
-//   // timeout: 2000,
-//   maximumAge: 0
-// };
-
-// function success(pos) {
-//   var crd = pos.coords;
-//   currentLat = crd.latitude;
-//   currentLong = crd.longitude;
-//   console.log('Your current position is:');
-//   console.log(`Latitude : ${crd.latitude}`);
-//   console.log(`Longitude: ${crd.longitude}`);
-//   console.log(`More or less ${crd.accuracy} meters.`);
-//   // $("#location-input").append(crd).val().trim();
-// };
-
-// function error(err) {
-//   console.warn(`ERROR(${err.code}): ${err.message}`);
-// };
-
-// navigator.geolocation.getCurrentPosition(success, error, geoOptions);
 
 // GOOGLE MAPS DIRECTIONS
 google.maps.event.addDomListener(window, 'load', function () {
@@ -52,26 +19,9 @@ google.maps.event.addDomListener(window, 'load', function () {
                 var address = place.formatted_address;
                 var latitude = place.geometry.location.A;
                 var longitude = place.geometry.location.F;
-               
-            });
-        });
+              });});
 
-         google.maps.event.addDomListener(window, 'load', function () {
-            var places = new google.maps.places.Autocomplete(document.getElementById('destination-input'));
-            google.maps.event.addListener(places, 'place_changed', function () {
-                var place = places.getPlace();
-                var address = place.formatted_address;
-                var latitude = place.geometry.location.A;
-                var longitude = place.geometry.location.F;
-                destPlaceId = place.place_id
-                destLong = place.geometry.viewport.b.b
-                destLat = place.geometry.viewport.f.f
-               
-            });
-        });
-
-var map = new google.maps.Map(document.getElementById('map'), 
-  {
+var map = new google.maps.Map(document.getElementById('map'), {
   zoom:7,
   mapTypeId: google.maps.MapTypeId.ROADMAP
 });
@@ -81,83 +31,69 @@ directionsDisplay.setPanel(document.getElementById('panel'));
 
 
 // GOOGLE PLACES
+
+google.maps.event.addDomListener(window, 'load', function () {
+            var places = new google.maps.places.Autocomplete(document.getElementById('destination-input'));
+            google.maps.event.addListener(places, 'place_changed', function () {
+                var place = places.getPlace();
+                var address = place.formatted_address;
+                var latitude = place.geometry.location.A;
+                var longitude = place.geometry.location.F;
+                destPlaceId = place.place_id
+                destLong = place.geometry.viewport.b.b
+                destLat = place.geometry.viewport.f.f
+              });});
+
 $('#search-button').click(function() {
     event.preventDefault();
-    var keyword = $('input[type]:checked').val();
-    console.log(keyword);
-    var address = $('#location-input').val(); 
-    var destination = $('#destination-input').val()
-    var request = {
-        origin: address,
-        destination: destination,
-        travelMode: google.maps.DirectionsTravelMode.DRIVING
-    };
-    
-    directionsService.route(request, function(response, status) {
-        if (status == google.maps.DirectionsStatus.OK) {
-            directionsDisplay.setDirections(response);
-        }
-    });
-     var nearbyDestlocation = new google.maps.LatLng(destLat,destLong);
 
-  var nearbyRequest = {
-    location: nearbyDestlocation,
-    radius: '500',
-    keyword: [keyword]
-  };
+    var keyword = $('input[type]:checked').val();
+
+    var destination = $('#destination-input').val();
+
+    var request = {
+        origin: destination};
+
+    var nearbyDestlocation = new google.maps.LatLng(destLat,destLong);
+
+      var nearbyRequest = {
+        location: nearbyDestlocation,
+        radius: '500',
+        keyword: [keyword]
+      };
+
 
   service = new google.maps.places.PlacesService(map);
   service.nearbySearch(nearbyRequest, callback);
-
+});
 
 function callback(results, status) {
-  if (status == google.maps.places.PlacesServiceStatus.OK) {
+  if (status == google.maps.places.PlacesServiceStatus.OK)  if (status == google.maps.places.PlacesServiceStatus.OK) {
+    console.log(results[0])
+     console.log(results)
      var i = 0
      var res = [];
-     for (i = 0; i < results.length; i++){
+     for (i = 0; i < 5; i ++){
       var item = results[i];
 
-      var hours = "not available"
-      if(item.opening_hours){
+      var hours = "not available";
+      if (item.opening_hours) {
         hours = item.opening_hours.open_now
-      }
-      var rating = "not available"
-      if(item.rating){
-        rating = item.rating
+        if(hours === true){
+          hours = "Open now"
+
+        }
+        else{
+          hours = "Closed"
+        }
       }
       
-      res.push({
-        name: item.name,
-        vicinity: item.vicinity,
-        longtitude: item.geometry.viewport.b.b,
-        latitude: item.geometry.viewport.f.f,
-        rating: rating,
-        open: hours,
-      });
-      console.log(item)
-      console.log(item.rating)
-      console.log(hours)
-      console.log(item.vicinity)
-      console.log(item.name)
-   }
-   database.ref().push(res);
-   }
-   }
-
-   database.ref().on('child_added', function(childSnapshot) {
-  $('.table').prepend(
-    '<tr><td>' +
-      childSnapshot.val().name +
-      '</td><td>' +
-      childSnapshot.val().vicinity +
-      '</td><td>' +
-      childSnapshot.val().rating +
-      '</td><td>' +
-      childSnapshot.val().open +
-      '</td></tr>'
+      console.log(item);
+      $('.table').prepend('<tr><td>' + item.name + '</td><td>' + item.vicinity + '</td><td>' + item.rating +'</td><td>' + hours +'</td></tr>'
   );
+    };};};
+
 });
- });
 
   // LYFT 
   //  var OPTIONS = {
@@ -191,6 +127,28 @@ function callback(results, status) {
   // }, c.src = t.scriptSrc, a.insertBefore(c, a.childNodes[0])
   // }).call(this, OPTIONS);
 
+// GEOLOCATION
+// var geoOptions = {
+//   enableHighAccuracy: true,
+//   // timeout: 2000,
+//   maximumAge: 0
+// };
 
-});
+// function success(pos) {
+//   var crd = pos.coords;
+//   currentLat = crd.latitude;
+//   currentLong = crd.longitude;
+//   console.log('Your current position is:');
+//   console.log(`Latitude : ${crd.latitude}`);
+//   console.log(`Longitude: ${crd.longitude}`);
+//   console.log(`More or less ${crd.accuracy} meters.`);
+//   // $("#location-input").append(crd).val().trim();
+// };
+
+// function error(err) {
+//   console.warn(`ERROR(${err.code}): ${err.message}`);
+// };
+
+// navigator.geolocation.getCurrentPosition(success, error, geoOptions);
+
 

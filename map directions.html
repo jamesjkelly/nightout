@@ -143,7 +143,7 @@ function callback(results, status) {
   if (status == google.maps.places.PlacesServiceStatus.OK) {
      var i = 0
      var res = [];
-     for (i = 0; i < results.length; i ++){
+     for (i = 0; i < 3; i ++){
       var item = results[i];
 
       var hours = "not available"
@@ -169,7 +169,7 @@ function callback(results, status) {
       console.log(item.vicinity)
       console.log(item.name)
    }
-   database.ref().push(res[0]);
+   database.ref().push(res);
    }
    }
 
