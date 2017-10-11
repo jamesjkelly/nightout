@@ -1,3 +1,4 @@
+/*BODY*/
 .Site {
   display: flex;
   min-height: 100vh;
@@ -68,7 +69,6 @@ a {
 
 }
 
-
 /*MAIN CONTAINERS*/
 #yelp-container, #map-container, #lyft-container {
 	background-color: rgba(255,255,255,.8);
@@ -93,27 +93,29 @@ a {
 	clear:both;
 }
 
+/*SPACERS*/
+
 #yelp-spacer, #map-spacer, #lyft-spacer {
 	height:50px;
 	width:100%;
 }
 
-#directions-div {
-	margin-top: 10px;
-	height: auto;
+/*PLACES CONTAINER*/
+#results-container {
 	overflow-y: scroll;
+	height: 390px;
+	margin-top: 5px;
 }
 
-.table {
-	overflow-y: scroll;
+th {
+	font-style: bold, 15px;
 }
 
-#direction-button {
-	size: 5px;
-}
+
+/*DIRECTIONS CONTAINER*/
 
 #map {
-	height: 300px;
+	height: 375px;
 	position: fixed;
 	margin-top: 15px;
 }
@@ -122,21 +124,18 @@ a {
  }
 
 #panel {
-	height: 375px;
+	height: 430px;
 	overflow-y: scroll;
+	margin-top: 5px;
 }
-
 
 #submit {
 	margin-top: 5px;
 	margin-bottom: 5px;
 }
 
-#lyft-web-button-parent {
-	padding-top: 5px;
-}
 
-
+/*FOOTER*/
 footer {
 	height: 60px;
 	width: 100%;

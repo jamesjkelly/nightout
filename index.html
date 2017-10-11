@@ -1,162 +1,111 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-	<title>NightOut</title>
-
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
-
-    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.40.1/mapbox-gl.css' rel='stylesheet'>
-
-	<link rel="stylesheet" type="text/css" href="style.css">
-
-	<link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
-
-	<!-- Jquery Minified -->
-	<script
-  	src="https://code.jquery.com/jquery-3.2.1.min.js"
-  	integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-  	crossorigin="anonymous"></script> 
-
-  	<!-- GOOGLE MAPS -->
-	 <script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyBsGih1FDcYzxWH7bhNHgos_OBkYPiiSHw&libraries=places"></script>
-
-	 <!-- FIREBASE -->
-	 <script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
-	
-
+    <title>NightOut</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
+    <!-- Jquery Minified -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <!-- GOOGLE MAPS -->
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyBsGih1FDcYzxWH7bhNHgos_OBkYPiiSHw&libraries=places"></script>
 </head>
 
 <body class="Site">
-
-<main class="Site-content">
-		<div class="sitehead">
-			<center><img src="assets/images/header.png" class="titleimg"></center>
-
-		<div class="navigation">
-				<nav>
-					<ul class="homenav">
-						<li><a href="#yelp-spacer">Find a Spot</a></li>
-						<li><a href="#map-spacer">Where You At?</a></li>
-						<li><a href="#lyft-spacer">Get A Ride</a></li>
-					</ul></nav>
-		</div></div>
-
-	
-	
-<!-- ELEMENT ONE: YELP -->
-
-<div id="yelp-spacer"></div>
-
-	<div class="container" id="yelp-container">
-
-		<div class="row">
-
-			<div class="col-md-4" id="home">
-				<h3>Find a Spot</h3>
-
-				<form>
-					  <div class="form-group">
-
-					    <label>Point of Interest</label>
-
-					    <input type="text" class="form-control" id="destination-input">
-
-					  </div>
-
-					<div class="form-radio">
- 						<label class="form-radio-label">
-    					<input class="form-radio-input" name="type" type="radio" value="bar"> Bar</label>
-				
- 						<label class="form-radio-label">
-    					<input class="form-radio-input" name="type" type="radio" value="restaurant"> Restaurant</label>
-	
- 						<label class="form-radio-label">
-    					<input class="form-radio-input" name="type" type="radio" value="night_club"> Club</label>
-		
- 						<label class="form-radio-label">
-    					<input class="form-radio-input" name="type" type="radio" value="cafe"> Cafe</label>
-					</div>
-					
-					<label>Current Location</label>
-
-					<input type="text" class="form-control" id="location-input">
-
-					 <select id="mode">
-					      <option value="DRIVING">Driving</option>
-					      <option value="WALKING">Walking</option>
-					      <option value="BICYCLING">Bicycling</option>
-					      <option value="TRANSIT">Transit</option>
-					    </select>
-
-					    <br><br>
-
-					<button class="btn btn-primary" id="search-button">Search</button>
-				</form>
-			</div>
-		
-
-			<div class="col-md-8 results-table">
-				<table class="table">
-				  <thead>
-				    <tr>
-				      <th>Restaurant Name</th>
-				      <th>Address</th>
-				      <th>Rating</th>
-				      <th>Open?</th>
-				      <th>Directions</th>
-				    </tr>
-				  </thead>
-
-				  <tbody>
-
-				  </tbody>
-
-				</table>
-			</div>
-		</div>
-	</div>
-	
-
-<!-- ELEMENT TWO: MAP/DIRECTION -->
-<div id="map-spacer"></div>
-
-	<div class="container" id="map-container">
-		<div class="row">
-			<div class="col-md-4">
-					    <span id="establishment-input"></span>
-				
-				<div id="map"></div>
-
-			</div>
-
-	    		
-
-		<div class="col-md-8" >
-			<h3>Directions</h3>
-			<div id="directions-div">
-				<div id="panel"></div>
-			</div>
-		</div>
-		</div>
-	</div>
-
-
-<!-- ELEMENT THREE: LYFT BUTTON -->
-<div id="lyft-spacer"></div>
-
-	<div class="container" id="lyft-container">
-		<div id="lyft-web-button-parent" class=".lyft-web-button.hot-pink"></div>
-	</div>
-
-</main>
-
-<footer>
-	<h6>Copyright 2017, That One Group</h6>
-</footer>
-
-
-<!-- External JavaScript -->
-	<script src="lyft-test.js"></script>
-
+    <main class="Site-content">
+        <div class="sitehead">
+            <center><img src="assets/images/header.png" class="titleimg"></center>
+            <div class="navigation">
+                <nav>
+                    <ul class="homenav">
+                        <li><a href="#yelp-spacer">Find a Spot</a></li>
+                        <li><a href="#map-spacer">Where You At?</a></li>
+                        <li><a href="#lyft-spacer">Get A Ride</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <!-- ELEMENT ONE: YELP -->
+        <div id="yelp-spacer"></div>
+        <div class="container" id="yelp-container">
+            <div class="row">
+                <div class="col-md-4" id="search-container">
+                    <h3>Find a Spot</h3>
+                    <form>
+                            <label>Point of Interest</label>
+                            <input type="text" class="form-control" id="destination-input">
+                        <div class="form-radio">
+                            <label class="form-radio-label">
+                                <input class="form-radio-input" name="type" type="radio" value="bar"> Bar</label>
+                            <label class="form-radio-label">
+                                <input class="form-radio-input" name="type" type="radio" value="restaurant"> Restaurant</label>
+                            <label class="form-radio-label">
+                                <input class="form-radio-input" name="type" type="radio" value="night_club"> Club</label>
+                            <label class="form-radio-label">
+                                <input class="form-radio-input" name="type" type="radio" value="cafe"> Cafe</label>
+                        </div>
+                        <label>Current Location</label>
+                        <input type="text" class="form-control" id="location-input">
+                        <br>
+                        <label>Choose Your Transpo'</label>
+                        <select id="mode">
+                            <option value="DRIVING">Driving</option>
+                            <option value="WALKING">Walking</option>
+                            <option value="BICYCLING">Bicycling</option>
+                            <option value="TRANSIT">Transit</option>
+                        </select>
+                        <br>
+                        <br>
+                        <button class="btn btn-primary" id="search-button">Start Your Night</button>
+                    </form>
+                </div>
+                <div class="col-md-8">
+                    <div id="results-container">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Restaurant Name</th>
+                                    <th>Address</th>
+                                    <th>Rating</th>
+                                    <th>Open?</th>
+                                    <th>Directions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ELEMENT TWO: MAP/DIRECTION -->
+        <div id="map-spacer"></div>
+        <div class="container" id="map-container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h3>Directions</h3>
+                    <span id="establishment-input"></span>
+                    <div id="map"></div>
+                </div>
+                <div class="col-md-8">
+                    <div id="directions-div">
+                        <div id="panel"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ELEMENT THREE: LYFT BUTTON -->
+        <div id="lyft-spacer"></div>
+        <div class="container" id="lyft-container">
+            <div id="lyft-web-button-parent" class=".lyft-web-button.hot-pink"></div>
+        </div>
+    </main>
+    <footer>
+        <h6>Copyright 2017, That One Group</h6>
+    </footer>
+    <!-- External JavaScript -->
+    <script src="lyft-test.js"></script>
 </body>
+
 </html>
