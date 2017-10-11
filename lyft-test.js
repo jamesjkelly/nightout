@@ -7,8 +7,13 @@ var currentLat;
 var currentLong;
 var destLat;
 var destLong;
+<<<<<<< HEAD
 var destPlaceId;
 var establishment;
+=======
+
+
+>>>>>>> 0e4f91b01fd3cc9597dc3d4d1396881e41e05175
 
 
 // GOOGLE MAPS DIRECTIONS
@@ -39,7 +44,6 @@ google.maps.event.addDomListener(window, 'load', function () {
                 var address = place.formatted_address;
                 var latitude = place.geometry.location.A;
                 var longitude = place.geometry.location.F;
-                destPlaceId = place.place_id
                 destLong = place.geometry.viewport.b.b
                 destLat = place.geometry.viewport.f.f
               });});
@@ -73,11 +77,18 @@ function callback(results, status) {
     console.log(results[0])
      console.log(results)
      var i = 0
+<<<<<<< HEAD
     establishment = item;
      for (i = 0; i < 5; i ++){
       var item = results[i];
       
       var rating = "None";
+=======
+     for (i = 0; i < 5; i ++){
+      var item = results[i];
+      var rating = "Not Available";
+      
+>>>>>>> 0e4f91b01fd3cc9597dc3d4d1396881e41e05175
       if (item.rating) {
         rating = item.rating
       }
@@ -96,12 +107,42 @@ function callback(results, status) {
       
       console.log(item);
       console.log(item.vicinity);
+<<<<<<< HEAD
       $('.table').prepend('<tr class = "empty"><td>' + item.name + '</td><td>' + item.vicinity + '</td><td>' + rating +'</td><td>' + hours +'</td><td>' + "<button id='direction-button' height= 5px>Directions</button>" + '</tr>');
 
       $('#direction-button').click(function() {
         $(item.vicinity).val().innerHTML($("establishment-input"));
       });
     };};};
+=======
+      $('.table').prepend('<tr class = "empty"><td>' + item.name + '</td><td>' + item.vicinity + '</td><td>' + rating +'</td><td>' + hours +'</td><td>' + "<button class='directionsbutton' data-directions=' "+ item.vicinity +"'>get directions</button>" + '</tr>'
+  
+  );
+    };
+$(".directionsbutton").on("click",function(){
+      console.log($(this).attr("data-directions"))
+      $("#establishment-input").val($(this).attr("data-directions"))
+    var address = $('#location-input').val(); 
+    var destination = $('#establishment-input').val()
+    var request = {
+        origin: address,
+        destination: destination,
+        travelMode: google.maps.DirectionsTravelMode.DRIVING
+    };
+
+
+    directionsService.route(request, function(response, status) {
+        if (status == google.maps.DirectionsStatus.OK) {
+            directionsDisplay.setDirections(response);
+        }
+    });
+    })
+
+  };};
+
+   
+  
+>>>>>>> 0e4f91b01fd3cc9597dc3d4d1396881e41e05175
 
 });
 
