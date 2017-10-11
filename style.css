@@ -108,6 +108,10 @@ a {
 	overflow-y: scroll;
 }
 
+#direction-button {
+	size: 5px;
+}
+
 #map {
 	height: 300px;
 	position: fixed;

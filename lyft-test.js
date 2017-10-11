@@ -8,7 +8,7 @@ var currentLong;
 var destLat;
 var destLong;
 var destPlaceId;
-var res = [];
+var establishment;
 
 
 // GOOGLE MAPS DIRECTIONS
@@ -73,33 +73,34 @@ function callback(results, status) {
     console.log(results[0])
      console.log(results)
      var i = 0
-     var res = [];
+    establishment = item;
      for (i = 0; i < 5; i ++){
       var item = results[i];
       
-      var rating = "Not Available";
+      var rating = "None";
       if (item.rating) {
         rating = item.rating
       }
 
-      var hours = "not available";
+      var hours = "Call";
       if (item.opening_hours) {
         hours = item.opening_hours.open_now
         if(hours === true){
-          hours = "Open now"
+          hours = "Yes"
 
         }
         else{
-          hours = "Closed"
+          hours = "No"
         }
       }
       
-
-      var addresses = [item.vicinity];
       console.log(item);
       console.log(item.vicinity);
-      $('.table').prepend('<tr class = "empty"><td>' + item.name + '</td><td>' + item.vicinity + '</td><td>' + rating +'</td><td>' + hours +'</td><td>' + "<button >" + '</tr>'
-  );
+      $('.table').prepend('<tr class = "empty"><td>' + item.name + '</td><td>' + item.vicinity + '</td><td>' + rating +'</td><td>' + hours +'</td><td>' + "<button id='direction-button' height= 5px>Directions</button>" + '</tr>');
+
+      $('#direction-button').click(function() {
+        $(item.vicinity).val().innerHTML($("establishment-input"));
+      });
     };};};
 
 });
@@ -113,8 +114,8 @@ function callback(results, status) {
   //   location: {
   //     pickup: {}, 
   //     destination: {
-  //       latitude: destLat,
-  //       longitude: destLong,
+  //       latitude: item.geometry.viewport.b,
+  //       longitude: item.getElementById.viewport.f,
   //     },
   //   },
   //   parentElement: document.getElementById('lyft-web-button-parent'),
