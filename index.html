@@ -52,12 +52,12 @@
 		<div class="row">
 
 			<div class="col-md-4" id="home">
-				<h3>Find a Restaurant</h3>
+				<h3>Find a Spot</h3>
 
 				<form>
 					  <div class="form-group">
 
-					    <label>Destination</label>
+					    <label>Point of Interest</label>
 
 					    <input type="text" class="form-control" id="destination-input">
 
@@ -76,8 +76,21 @@
  						<label class="form-radio-label">
     					<input class="form-radio-input" name="type" type="radio" value="cafe"> Cafe</label>
 					</div>
+					
+					<label>Current Location</label>
 
-					  <button class="btn btn-primary" id="search-button">Search</button>
+					<input type="text" class="form-control" id="location-input">
+
+					 <select id="mode">
+					      <option value="DRIVING">Driving</option>
+					      <option value="WALKING">Walking</option>
+					      <option value="BICYCLING">Bicycling</option>
+					      <option value="TRANSIT">Transit</option>
+					    </select>
+
+					    <br><br>
+
+					<button class="btn btn-primary" id="search-button">Search</button>
 				</form>
 			</div>
 		
@@ -110,19 +123,13 @@
 	<div class="container" id="map-container">
 		<div class="row">
 			<div class="col-md-4">
-				<div class="form-group">
+					    <span id="establishment-input"></span>
+				
+				<div id="map"></div>
 
-					    <label>Current Location</label>
-
-					    <input type="text" class="form-control" id="location-input">
-
-					    <label>Destination</label>
-
-					    <input type="text" class="form-control" id="establishment-input">
-
-					  </div>
-	    		<div id="map"></div>
 			</div>
+
+	    		
 
 		<div class="col-md-8" >
 			<h3>Directions</h3>
