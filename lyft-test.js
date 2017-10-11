@@ -7,8 +7,8 @@ var currentLat;
 var currentLong;
 var destLat;
 var destLong;
-var destPlaceId;
-var res = [];
+
+
 
 
 // GOOGLE MAPS DIRECTIONS
@@ -39,7 +39,6 @@ google.maps.event.addDomListener(window, 'load', function () {
                 var address = place.formatted_address;
                 var latitude = place.geometry.location.A;
                 var longitude = place.geometry.location.F;
-                destPlaceId = place.place_id
                 destLong = place.geometry.viewport.b.b
                 destLat = place.geometry.viewport.f.f
               });});
@@ -104,6 +103,20 @@ function callback(results, status) {
 $(".directionsbutton").on("click",function(){
       console.log($(this).attr("data-directions"))
       $("#establishment-input").val($(this).attr("data-directions"))
+    var address = $('#location-input').val(); 
+    var destination = $('#establishment-input').val()
+    var request = {
+        origin: address,
+        destination: destination,
+        travelMode: google.maps.DirectionsTravelMode.DRIVING
+    };
+
+
+    directionsService.route(request, function(response, status) {
+        if (status == google.maps.DirectionsStatus.OK) {
+            directionsDisplay.setDirections(response);
+        }
+    });
     })
 
   };};
