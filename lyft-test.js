@@ -74,7 +74,7 @@ $(document).ready(function() {
         console.log(results[0]);
         console.log(results);
         var i = 0;
-        for (i = 0; i < 5; i++) {
+        for (i = 0; i < results.length && i < 5; i++) {
           var item = results[i];
           var rating = "None";
 
@@ -82,13 +82,13 @@ $(document).ready(function() {
             rating = item.rating;
           }
 
-          var hours = "Call";
+          var hours = "Unknown";
           if (item.opening_hours) {
             hours = item.opening_hours.open_now;
             if (hours === true) {
-              hours = "Open now";
+              hours = "Yes";
             } else {
-              hours = "Closed";
+              hours = "No";
             }
           }
 
