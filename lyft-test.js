@@ -1,23 +1,23 @@
-$(document).ready(function() {
-  var directionsService = new google.maps.DirectionsService();
-  var directionsDisplay = new google.maps.DirectionsRenderer();
-  var service;
-  var currentLat;
-  var currentLong;
-  var destLat;
-  var destLong;
+$(document).ready(function() {//jquery document ready
+  var directionsService = new google.maps.DirectionsService();// storing direction service function
+  var directionsDisplay = new google.maps.DirectionsRenderer();//storing rendering function
+  //var service;
+  // var currentLat;
+  // var currentLong;
+  //var destLat;
+  //var destLong;
 
   // GOOGLE MAPS DIRECTIONS
   google.maps.event.addDomListener(window, "load", function() {
-    var places = new google.maps.places.Autocomplete(
+    var places = new google.maps.places.Autocomplete(// adding autocomplete for current location
       document.getElementById("location-input")
     );
-    google.maps.event.addListener(places, "place_changed", function() {
-      var place = places.getPlace();
-      var address = place.formatted_address;
-      var latitude = place.geometry.location.A;
-      var longitude = place.geometry.location.F;
-    });
+    // google.maps.event.addListener(places, "place_changed", function() {
+    //   var place = places.getPlace();
+    //   var address = place.formatted_address;
+    //   var latitude = place.geometry.location.A;
+    //   var longitude = place.geometry.location.F;
+    // });
   });
 
   var map = new google.maps.Map(document.getElementById("map"), {
@@ -34,14 +34,14 @@ $(document).ready(function() {
     var places = new google.maps.places.Autocomplete(
       document.getElementById("destination-input")
     );
-    google.maps.event.addListener(places, "place_changed", function() {
-      var place = places.getPlace();
-      var address = place.formatted_address;
-      var latitude = place.geometry.location.A;
-      var longitude = place.geometry.location.F;
-      destLong = place.geometry.viewport.b.b;
-      destLat = place.geometry.viewport.f.f;
-    });
+     google.maps.event.addListener(places, "place_changed", function() {
+       var place = places.getPlace();
+    //   var address = place.formatted_address;
+    //   var latitude = place.geometry.location.A;
+    //   var longitude = place.geometry.location.F;
+     destLong = place.geometry.viewport.b.b;
+     destLat = place.geometry.viewport.f.f;
+     });
   });
 
   $("#search-button").click(function() {
@@ -63,37 +63,31 @@ $(document).ready(function() {
       keyword: [keyword]
     };
 
-    service = new google.maps.places.PlacesService(map);
+    var service = new google.maps.places.PlacesService(map);
     service.nearbySearch(nearbyRequest, callback);
   });
 
   function callback(results, status) {
-    $(".empty").empty();
+    $(".empty").empty();//empty previous content
       if (status == google.maps.places.PlacesServiceStatus.OK) {
-        console.log(results[0]);
-        console.log(results);
-        var i = 0;
-        for (i = 0; i < results.length && i < 5; i++) {
+        for (var i = 0; i < results.length && i < 5; i++) {
           var item = results[i];
-          var rating = "None";
+          var rating = "None";// storing rating if it doesnt exist in json
 
           if (item.rating) {
-            rating = item.rating;
+            rating = item.rating;//storing rating to value if it does exist
           }
 
-          var hours = "Unknown";
+          var hours = "Unknown"; //storing hours if it doesnt exist in json
           if (item.opening_hours) {
             hours = item.opening_hours.open_now;
             if (hours === true) {
-              hours = "Yes";
+              hours = "Yes";//storing hours to yes if true
             } else {
-              hours = "No";
+              hours = "No";//storing hours to no if true
             }
           }
-
-          var addresses = [item.vicinity];
-          console.log(item);
-          console.log(item.vicinity);
+          // var addresses = [item.vicinity];
           $(".table").prepend(
             '<tr class = "empty"><td>' +
               item.name +
@@ -113,7 +107,7 @@ $(document).ready(function() {
         $(".directionsbutton").on("click", function() {
           console.log($(this).attr("data-directions"));
 
-          var selectedMode = document.getElementById("mode").value;
+          var selectedMode = document.getElementById("mode").value;// grabbing mode of transport from dropdown menu
           var mode = $("input[mode]:checked").val();
           $("#establishment-input").val($(this).attr("data-directions"));
           var address = $("#location-input").val();
