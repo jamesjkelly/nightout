@@ -69,7 +69,6 @@ $(document).ready(function() {
 
   function callback(results, status) {
     $(".empty").empty();
-    if (status == google.maps.places.PlacesServiceStatus.OK)
       if (status == google.maps.places.PlacesServiceStatus.OK) {
         console.log(results[0]);
         console.log(results);
